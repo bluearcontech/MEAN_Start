@@ -12,9 +12,12 @@ import { Subscription } from 'rxjs/Subscription';
 export class HeaderComponent implements OnInit {
 
   isLoggedIn: boolean;
+  loginUser: Object;
   subscription: Subscription;
 
-  constructor(private _authService: AuthService, private _router: Router) { }
+  constructor(private _authService: AuthService, private _router: Router) {
+
+  }
 
   ngOnInit() {
     this.subscription = this._authService.isLoggedIn
@@ -24,13 +27,10 @@ export class HeaderComponent implements OnInit {
         }
       )
 
-    let token = localStorage.getItem('token');
-    console.log('token value :', token)
-    console.log('loggedIn user value is:', this.isLoggedIn)
-    if (this.isLoggedIn === undefined && token) {
-      this._authService.getUser();
-      this._authService.isLoggedIn.next(true);
-    }
+    this._authService.getUser()
+      .subscribe(
+        res => console.log('loggedin User detail data:', res)
+      )
   }
 
   onLogIn() {

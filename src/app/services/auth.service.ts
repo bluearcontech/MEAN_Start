@@ -35,9 +35,13 @@ export class AuthService {
     let token = localStorage.getItem('token');
     headers.append('Authorization', `${token}`);
     let options = new RequestOptions({ headers: headers });
-    console.log('before call API')
     return this._http.get('api/v1/getuser', options)
-      .map(res => res.json())
+      .map(res => {
+        if (res.status === 200) {
+          this.isLoggedIn.next(true);
+        }
+        return res
+      })
   }
 
   logout() {
@@ -59,10 +63,8 @@ export class AuthService {
     let options = new RequestOptions({ headers: headers });
 
     return this._http.post('api/v1/register', body, options)
-      .map(this.extractData)
+      .map(res => res.json())
   }
-
-
 
   private extractData(res: Response) {
     let body = res.json();
