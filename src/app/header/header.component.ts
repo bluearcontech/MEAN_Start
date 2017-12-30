@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -18,10 +19,18 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.subscription = this._authService.isLoggedIn
       .subscribe(
-      isLoggedIn => {
-        this.isLoggedIn = isLoggedIn
-      }
+        isLoggedIn => {
+          this.isLoggedIn = isLoggedIn
+        }
       )
+
+    let token = localStorage.getItem('token');
+    console.log('token value :', token)
+    console.log('loggedIn user value is:', this.isLoggedIn)
+    if (this.isLoggedIn === undefined && token) {
+      this._authService.getUser();
+      this._authService.isLoggedIn.next(true);
+    }
   }
 
   onLogIn() {
@@ -34,11 +43,22 @@ export class HeaderComponent implements OnInit {
         result => {
           console.log('response:', result)
           if (result.status === 200) {
+            localStorage.removeItem('token')
             this._router.navigate([''])
           }
         },
         error => { console.log('logout error:', error) },
       )
+  }
+
+  onGetUserInfo() {
+    let token = localStorage.getItem('token');
+    if (token) {
+      this._authService.getUser()
+        .subscribe(
+          result => console.log('user info result:', result)
+        )
+    }
   }
 
   onSignUp() {

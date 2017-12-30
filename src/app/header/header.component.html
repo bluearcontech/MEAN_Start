@@ -6,6 +6,7 @@
   <button mat-button (click)="onLogIn()" *ngIf="!isLoggedIn">Login</button>
   <button mat-button (click)="onSignUp()" *ngIf="!isLoggedIn">SignUp</button>
   <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
+  <button mat-button (click)="onGetUserInfo()" *ngIf="isLoggedIn">Get User Info</button>
 
   <button id="menu" mat-button [matMenuTriggerFor]="menu">Menu</button>
   <mat-menu #menu="matMenu">

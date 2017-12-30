@@ -6,7 +6,6 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -29,6 +28,16 @@ export class AuthService {
         }
         return res.json()
       })
+  }
+
+  getUser() {
+    let headers = new Headers({ 'Content-type': 'application/json' });
+    let token = localStorage.getItem('token');
+    headers.append('Authorization', `${token}`);
+    let options = new RequestOptions({ headers: headers });
+    console.log('before call API')
+    return this._http.get('api/v1/getuser', options)
+      .map(res => res.json())
   }
 
   logout() {
