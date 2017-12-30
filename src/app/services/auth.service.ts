@@ -22,9 +22,10 @@ export class AuthService {
 
     return this._http.post('api/v1/login', body, options)
       .map(res => {
-        console.log('auth service response:', res)
         if (res.status === 200) {
           this.isLoggedIn.next(true);
+        } else {
+          this.isLoggedIn.next(false);
         }
         return res.json()
       })
@@ -40,7 +41,7 @@ export class AuthService {
         if (res.status === 200) {
           this.isLoggedIn.next(true);
         }
-        return res
+        return res.json()
       })
   }
 

@@ -39,7 +39,10 @@ const getLoggedInUser = (req, res, next) => {
     var authorization = req.headers.authorization;
     jwt.verify(authorization, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        return res.json({ success: false, message: 'Failed to auth' })
+        return res.status(401).json({
+          success: false,
+          message: 'Failed to auth'
+        })
       } else {
         var userId = decoded._id;
         // Fetch the user by id
@@ -54,7 +57,7 @@ const getLoggedInUser = (req, res, next) => {
       }
     })
   }
-  return res.status(500);
+  return res.status(401);
 }
 
 const postRegister = (req, res, next) => {

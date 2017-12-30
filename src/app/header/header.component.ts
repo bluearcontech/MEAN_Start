@@ -29,7 +29,9 @@ export class HeaderComponent implements OnInit {
 
     this._authService.getUser()
       .subscribe(
-        res => console.log('loggedin User detail data:', res)
+        res => {
+          this.loginUser = res.username
+        }
       )
   }
 
@@ -49,16 +51,6 @@ export class HeaderComponent implements OnInit {
         },
         error => { console.log('logout error:', error) },
       )
-  }
-
-  onGetUserInfo() {
-    let token = localStorage.getItem('token');
-    if (token) {
-      this._authService.getUser()
-        .subscribe(
-          result => console.log('user info result:', result)
-        )
-    }
   }
 
   onSignUp() {

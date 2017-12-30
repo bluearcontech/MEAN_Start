@@ -30,7 +30,6 @@ export class SigninComponent implements OnInit {
     this._authService.signInUser(email, password)
       .subscribe(
         data => {
-          console.log('login response is:', data)
           localStorage.setItem('token', data.token)
           this.router.navigate(['/']) },
         error => {
