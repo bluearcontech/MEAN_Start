@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" id="toolbar">
+  <div class="left">
+    <span id="title">Angular 4 Mean Starter - </span><span id="author">by Zhenfan Li</span>
+  </div>
+
+  <button mat-button (click)="onLogIn()" *ngIf="!isLoggedIn">Login</button>
+  <button mat-button (click)="onSignUp()" *ngIf="!isLoggedIn">SignUp</button>
+  <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
+
+  <button id="menu" mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/create">
+      <mat-icon>note_add</mat-icon>
+      <span>Create Todo</span>
+    </button>
+    <button mat-menu-item routerLink="">
+      <mat-icon>view_headline</mat-icon>
+      <span>Read Todos</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
