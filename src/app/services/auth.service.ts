@@ -31,6 +31,18 @@ export class AuthService {
       })
   }
 
+  logout() {
+    let headers = new Headers({ 'Content-type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this._http.get('api/v1/logout', options)
+      .map(res => {
+        if (res.status === 200) {
+          this.isLoggedIn.next(false);
+        }
+        return res
+      })
+  }
+
   signUpUser(email: string, password: string): Observable<Response> {
     let body = { username: email, password: password };
     let bodyString = JSON.stringify(body);

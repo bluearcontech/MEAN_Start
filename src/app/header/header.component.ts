@@ -18,9 +18,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.subscription = this._authService.isLoggedIn
       .subscribe(
-        isLoggedIn => {
-          this.isLoggedIn = isLoggedIn
-        }
+      isLoggedIn => {
+        this.isLoggedIn = isLoggedIn
+      }
       )
   }
 
@@ -29,7 +29,16 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-
+    this._authService.logout()
+      .subscribe(
+        result => {
+          console.log('response:', result)
+          if (result.status === 200) {
+            this._router.navigate([''])
+          }
+        },
+        error => { console.log('logout error:', error) },
+      )
   }
 
   onSignUp() {

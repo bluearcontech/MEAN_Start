@@ -56,24 +56,19 @@ const postRegister = (req, res, next) => {
         return next(err)
       }
       if(user) {
-        console.log('FFFFFFFFFFFFFFFF')
         return res.status(400).json({
           message: 'Username already exists.',
         })
       }
-      console.log('BBBBBBBBBBBBBBBBBBBBBBB')
       var user = new User({
         username: req.body.username,
         password: req.body.password,
       })
-      console.log('BBFFFFFFFFFFFFFFFFFF')
       user.save((err) => {
         if(err) {
-          console.log('saving user error222222222')
           console.log('error:', err)
           return next(err)
         }
-        console.log('save user finish')
         return res.status(200).json({
           username: user.username,
           password: user.password,
