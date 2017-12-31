@@ -1,5 +1,4 @@
-<h1 class="mat-display-1" style="margin-top:2em; text-align:center;">Read Todos</h1>
-
+<h1 class="mat-display-1" style="margin-top:2em; text-align:center;" *ngIf="isLoggedIn">Hello {{loginUser}}</h1>
 <mat-card *ngFor="let todo of todos">
   <mat-card-title>{{todo.title}}</mat-card-title>
   <mat-card-content>
